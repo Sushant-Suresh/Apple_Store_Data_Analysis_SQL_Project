@@ -44,16 +44,22 @@ CREATE TABLE sales (sale_id INT PRIMARY KEY, store_id INT, product_id INT, saled
 -- `products` Table Structure & Data
 SELECT * FROM products;
 ```
+**Output:**
+
 ![Products_Table](https://github.com/user-attachments/assets/54fe00e4-c807-4662-a803-866b47d43c26)
 ```sql
 -- `store` Table Structure & Data
 SELECT * FROM store;
 ```
+**Output:**
+
 ![Store_Table](https://github.com/user-attachments/assets/8ef764de-2238-4191-987b-d1165901ac7e)
 ```sql
 -- `sales` Table Structure & Data
 SELECT * FROM sales;
 ```
+**Output:**
+
 ![Sales_Table](https://github.com/user-attachments/assets/3df0d636-1e0b-4af1-90f2-315d9d539a1f)
 ### 3. Data Analysis & Findings
 
@@ -75,6 +81,8 @@ WHERE s.product_id = p.product_id;
 SELECT saledate, sale_day, sale_price  -- Querying the new columns
 FROM sales;
 ```
+**Output:**
+
 ![Q1](https://github.com/user-attachments/assets/8c6946bf-8d08-4d13-9e6f-e2b7bff8ca9a)
 
 2. **Find the Total Sale in India for the Last 5 Years.**
@@ -88,6 +96,8 @@ WHERE st.country = 'India'
 AND sa.saledate >= CURRENT_DATE - INTERVAL '5 years'
 GROUP BY year_;
 ```
+**Output:**
+
 ![Q2](https://github.com/user-attachments/assets/eccbba30-1fae-47a0-81a9-f407e4d0fbd8)
 
 3. **Find Revenue, Total Orders & Quantity Ordered for Each Country in the Last Quarter of 2017.**
@@ -102,6 +112,8 @@ ON sa.store_id = st.store_id
 WHERE sa.saledate BETWEEN '2017-10-01' AND '2017-12-31'
 GROUP BY st.country;
 ```
+**Output:**
+
 ![Q3](https://github.com/user-attachments/assets/369d4af8-4d62-4a89-9950-b6cae17a56b6)
 
 4. **Find Top-5 Products With Highest Profit.**
@@ -115,6 +127,8 @@ GROUP BY p.product_name
 ORDER BY profit DESC
 LIMIT 5;
 ```
+**Output:**
+
 ![Q4](https://github.com/user-attachments/assets/799d9d33-23bc-421e-9361-45f0418e2798)
 
 5. **How many units of each product have been sold?**
@@ -126,6 +140,8 @@ JOIN sales AS s
 ON p.product_id = s.product_id
 GROUP BY p.product_name;
 ```
+**Output:**
+
 ![Q5](https://github.com/user-attachments/assets/1c8f71d1-c9e6-4c62-838c-a7247b3ed7c5)
 
 6. **Find Top-5 Best Selling Products.**
@@ -139,6 +155,8 @@ GROUP BY p.product_name
 ORDER BY units_sold DESC
 LIMIT 5;
 ```
+**Output:**
+
 ![Q6](https://github.com/user-attachments/assets/b0cc5573-a4eb-4668-ab2a-5e546b783a60)
 
 7. **Distribute products across different pricing categories - Budget(<500), Mid-Range(500-1000) & Premium(>1000).**
@@ -155,6 +173,8 @@ SELECT product_category,
 FROM category_CTE
 GROUP BY product_category;
 ```
+**Output:**
+
 ![Q7](https://github.com/user-attachments/assets/4e5f332b-ecec-431b-85e1-aa8424cb5b51)
 
 **Creating a CTAS for saving time while querying:**
@@ -171,6 +191,8 @@ ON sa.store_id = st.store_id;
 
 SELECT * FROM orders_summary;
 ```
+**Output:**
+
 ![CTA](https://github.com/user-attachments/assets/401a55a5-6cbe-4b3c-9221-0396e728635e)
 
 8. **Rank stores based on their performance (total orders processed).**
@@ -181,6 +203,8 @@ SELECT store_name,
 FROM orders_summary
 GROUP BY store_name; 
 ```
+**Output:**
+
 ![Q8](https://github.com/user-attachments/assets/78e010bf-5789-4418-a89f-99dbda9d7582)
 
 9. **Evaluate the sales performance of each store (if sale > avg. sales categorize as 'High' else 'Low').**
@@ -196,6 +220,8 @@ SELECT store_name,
 FROM orders_summary
 GROUP BY store_name;
 ```
+**Output:**
+
 ![Q9](https://github.com/user-attachments/assets/77f881f5-f9c3-443e-b8f1-1378075590e2)
 
 10. **Categorize sales based on month of sale date ('Winter'/ 'Summer').**
@@ -208,6 +234,8 @@ SELECT COUNT(sale_id) AS products_sold,
 FROM sales
 GROUP BY season;
 ```
+**Output:**
+
 ![Q10](https://github.com/user-attachments/assets/72223230-3490-47fb-8d02-ff597f867041)
 
 11. **Identify top 5 products with decreasing revenue(%) compared to last year.**
@@ -226,6 +254,8 @@ WHERE revenue_2021 < revenue_2020
 ORDER BY revenue_dip_percentage ASC
 LIMIT 5;
 ```
+**Output:**
+
 ![Q11](https://github.com/user-attachments/assets/ece6b55f-a41a-4403-b900-b51e652f5b2a)
 
 12. **Find Y-O-Y growth for each store based on total profit.**
@@ -255,6 +285,8 @@ SELECT  store_name,
 FROM yearly_profit
 GROUP BY store_name;
 ```
+**Output:**
+
 ![Q12](https://github.com/user-attachments/assets/3e665b2a-37b5-4989-9c49-2541a3d707a1)
 
 13. **Find each store's best selling month of 2020 and the sale made in that month.**
@@ -272,6 +304,8 @@ WHERE total_sales = (SELECT MAX(total_sales)
                      FROM monthly_sales AS ms
                      WHERE ms.store_name = monthly_sales.store_name);
 ```
+**Output:**
+
 ![Q13](https://github.com/user-attachments/assets/ed22de08-2372-46e5-a857-8ad6cbde3a08)
 
 14. **Find the top 3 products with the highest total revenue for each store in 2020.**
@@ -288,6 +322,8 @@ FROM ProductRevenue
 WHERE rank <= 3  
 ORDER BY store_name, total_revenue DESC;
 ```
+**Output:**
+
 ![Q14](https://github.com/user-attachments/assets/f998f5f9-8dad-44d5-ba7e-c151918a327a)
 
 15. **Find the avg. sale price of products sold by each store in 2020 & rank them based on their avg. sale price.**
@@ -302,6 +338,8 @@ SELECT store_name, avg_sale_price, rank
 FROM StoreAveragePrice
 ORDER BY rank;
 ```
+**Output:**
+
 ![Q15](https://github.com/user-attachments/assets/97f12f4a-2982-4d70-a327-cdf9fe4637de)
 
 ## Conclusion
