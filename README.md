@@ -1,5 +1,7 @@
 # Apple Store Data Analysis SQL Project
 
+![1234](https://github.com/user-attachments/assets/e46cc8ec-7eb5-407c-9d29-22a6420de365)
+
 ## Project Overview
 
 **Project Title**: Apple Store Data Analysis
@@ -39,7 +41,11 @@ CREATE TABLE sales (sale_id INT PRIMARY KEY, store_id INT, product_id INT, saled
                     CONSTRAINT fk_store FOREIGN KEY (store_id) REFERENCES store(store_id),
                     CONSTRAINT fk_products FOREIGN KEY (product_id) REFERENCES products(product_id));
 ```
-### 2. Data was imported into each table using the .csv files
+**ERD For Database:**
+
+![Apple_ERD](https://github.com/user-attachments/assets/172ac137-a8e4-4401-8157-765edd19d02b)
+
+### 2. Data Imported Into Tables From the .csv Files
 ```sql
 -- `products` Table Structure & Data
 SELECT * FROM products;
