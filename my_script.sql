@@ -191,16 +191,15 @@ GROUP BY store_name;
 -- Q13. Find each store's best selling month of 2020 and the sale made in that month.
 WITH monthly_sales AS (SELECT store_name,
                               TO_CHAR(saledate, 'Month') AS best_selling_month,
-                              SUM(quantity * sale_price) AS total_sales
+                              SUM(quantity * sale_price) AS total_sales,
+                              DENSE_RANK() OVER (PARTITION BY store_name ORDER BY SUM(quantity * sale_price) DESC) AS sales_rank
                        FROM orders_summary
                        WHERE EXTRACT(YEAR FROM saledate) = 2020
                        GROUP BY store_name, TO_CHAR(saledate, 'Month'))					   
-					   
+
 SELECT store_name, best_selling_month, total_sales
 FROM monthly_sales
-WHERE total_sales = (SELECT MAX(total_sales)
-                     FROM monthly_sales AS ms
-                     WHERE ms.store_name = monthly_sales.store_name);
+WHERE sales_rank = 1;
 
 -- Q14. Find the top 3 products with the highest total revenue for each store in 2020.
 WITH ProductRevenue AS (SELECT store_name,
