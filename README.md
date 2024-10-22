@@ -266,29 +266,29 @@ LIMIT 5;
 
 12. **Find Y-O-Y growth for each store based on total profit.**
 ```sql
-WITH yearly_profit AS (SELECT EXTRACT(YEAR FROM saledate) AS sale_year,
-                              store_name,
-                              SUM(quantity * (sale_price - cogs)) AS total_profit
-                       FROM orders_summary
-                       GROUP BY EXTRACT(YEAR FROM saledate), store_name)
+SELECT store_name,
 
-SELECT  store_name,
-        -- Growth for 2017-2018
-        ((MAX(CASE WHEN sale_year = 2018 THEN total_profit END) - MAX(CASE WHEN sale_year = 2017 THEN total_profit END)) / 
-          NULLIF(MAX(CASE WHEN sale_year = 2017 THEN total_profit END), 0)) * 100 AS "% Growth 17-18",
-	  
-        -- Growth for 2018-2019
-        ((MAX(CASE WHEN sale_year = 2019 THEN total_profit END) - MAX(CASE WHEN sale_year = 2018 THEN total_profit END)) / 
-          NULLIF(MAX(CASE WHEN sale_year = 2018 THEN total_profit END), 0)) * 100 AS "% Growth 18-19",
-    
-        -- Growth for 2019-2020
-        ((MAX(CASE WHEN sale_year = 2020 THEN total_profit END) - MAX(CASE WHEN sale_year = 2019 THEN total_profit END)) / 
-          NULLIF(MAX(CASE WHEN sale_year = 2019 THEN total_profit END), 0)) * 100 AS "% Growth 19-20",
-    
-        -- Growth for 2020-2021
-        ((MAX(CASE WHEN sale_year = 2021 THEN total_profit END) - MAX(CASE WHEN sale_year = 2020 THEN total_profit END)) / 
-          NULLIF(MAX(CASE WHEN sale_year = 2020 THEN total_profit END), 0)) * 100 AS "% Growth 20-21"
-FROM yearly_profit
+       -- Growth for 2017-2018
+       ((SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2018 THEN quantity * (sale_price - cogs) END) -
+         SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2017 THEN quantity * (sale_price - cogs) END)) /
+         NULLIF(SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2017 THEN quantity * (sale_price - cogs) END), 0)) * 100 AS "% Growth 17-18",
+
+       -- Growth for 2018-2019
+       ((SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2019 THEN quantity * (sale_price - cogs) END) -
+         SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2018 THEN quantity * (sale_price - cogs) END)) /
+         NULLIF(SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2018 THEN quantity * (sale_price - cogs) END), 0)) * 100 AS "% Growth 18-19",
+
+       -- Growth for 2019-2020
+       ((SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2020 THEN quantity * (sale_price - cogs) END) -
+         SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2019 THEN quantity * (sale_price - cogs) END)) /
+         NULLIF(SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2019 THEN quantity * (sale_price - cogs) END), 0)) * 100 AS "% Growth 19-20",
+
+       -- Growth for 2020-2021
+       ((SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2021 THEN quantity * (sale_price - cogs) END) -
+         SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2020 THEN quantity * (sale_price - cogs) END)) /
+         NULLIF(SUM(CASE WHEN EXTRACT(YEAR FROM saledate) = 2020 THEN quantity * (sale_price - cogs) END), 0)) * 100 AS "% Growth 20-21"
+
+FROM orders_summary
 GROUP BY store_name;
 ```
 **Output:**
