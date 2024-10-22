@@ -205,7 +205,7 @@ SELECT * FROM orders_summary;
 ```sql
 SELECT store_name,
        COUNT(*) AS total_orders,
-	   DENSE_RANK() OVER(ORDER BY COUNT(*) DESC) AS ranking
+       DENSE_RANK() OVER(ORDER BY COUNT(*) DESC) AS ranking
 FROM orders_summary
 GROUP BY store_name; 
 ```
@@ -217,12 +217,12 @@ GROUP BY store_name;
 ```sql
 SELECT store_name, 
        CASE 
-	       WHEN SUM(sale_price) > (SELECT AVG(total_sales) 
+           WHEN SUM(sale_price) > (SELECT AVG(total_sales) 
                                    FROM (SELECT SUM(sale_price) AS total_sales 
                                          FROM orders_summary 
                                          GROUP BY store_name) AS avg_sales) THEN 'High'
-	   ELSE 'Low' END
-	   AS sales_performance
+	   ELSE 'Low'
+       END AS sales_performance
 FROM orders_summary
 GROUP BY store_name;
 ```
