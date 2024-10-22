@@ -168,11 +168,11 @@ LIMIT 5;
 7. **Distribute products across different pricing categories - Budget(<500), Mid-Range(500-1000) & Premium(>1000).**
 ```sql
 WITH category_CTE AS (SELECT product_name,
-                               CASE
-	                               WHEN price < 500 THEN 'BUDGET'
-		                           WHEN price BETWEEN 500 AND 1000 THEN 'MID-RANGE'
-		                           ELSE 'PREMIUM'
-	                           END AS product_category
+                             CASE
+                                 WHEN price < 500 THEN 'BUDGET'
+                                 WHEN price BETWEEN 500 AND 1000 THEN 'MID-RANGE'
+                                 ELSE 'PREMIUM'
+                             END AS product_category
                       FROM products)	   
 SELECT product_category,
        COUNT(product_name)
