@@ -302,8 +302,8 @@ WITH monthly_sales AS (SELECT store_name,
                               SUM(quantity * sale_price) AS total_sales
                        FROM orders_summary
                        WHERE EXTRACT(YEAR FROM saledate) = 2020
-                       GROUP BY store_name, EXTRACT(MONTH FROM saledate), TO_CHAR(saledate, 'Month'))
-
+                       GROUP BY store_name, TO_CHAR(saledate, 'Month'))					   
+					   
 SELECT store_name, best_selling_month, total_sales
 FROM monthly_sales
 WHERE total_sales = (SELECT MAX(total_sales)
