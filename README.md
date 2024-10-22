@@ -254,7 +254,7 @@ WITH revenue_data AS (SELECT product_name,
 SELECT product_name, 
        revenue_2021, 
        revenue_2020,
-       ROUND(CAST((revenue_2021 - revenue_2020) / NULLIF(revenue_2020, 0) * 100 AS numeric), 2) AS revenue_dip_percentage
+       ROUND((revenue_2021 - revenue_2020) / NULLIF(revenue_2020, 0) * 100::numeric, 2)
 FROM revenue_data
 WHERE revenue_2021 < revenue_2020
 ORDER BY revenue_dip_percentage ASC
