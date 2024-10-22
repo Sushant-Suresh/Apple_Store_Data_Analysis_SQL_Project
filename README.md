@@ -188,7 +188,7 @@ GROUP BY product_category;
 CREATE TABLE orders_summary AS
 SELECT p.product_id, p.product_name, p.category, p.price, p.cogs,
        st.store_id, st.store_name, st.country,
-	   sa.sale_id, sa.saledate, sa.sale_price, sa.quantity
+       sa.sale_id, sa.saledate, sa.sale_price, sa.quantity
 FROM products AS p
 JOIN sales AS sa
 ON p.product_id = sa.product_id
