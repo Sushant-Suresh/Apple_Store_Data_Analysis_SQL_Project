@@ -215,14 +215,12 @@ WHERE rank <= 3
 ORDER BY store_name, total_revenue DESC;
 
 -- Q15. Find the avg. sale price of products sold by each store in 2020 & rank them based on their avg. sale price.
-WITH StoreAveragePrice AS (SELECT store_name,
-                                  AVG(sale_price) AS avg_sale_price,
-                                  ROW_NUMBER() OVER (ORDER BY AVG(sale_price) DESC) AS rank
-                           FROM orders_summary
-                           WHERE EXTRACT(YEAR FROM saledate) = 2020  
-                           GROUP BY store_name)
-SELECT store_name, avg_sale_price, rank
-FROM StoreAveragePrice
+SELECT store_name,
+       AVG(sale_price) AS avg_sale_price,
+       ROW_NUMBER() OVER (ORDER BY AVG(sale_price) DESC) AS rank
+FROM orders_summary
+WHERE EXTRACT(YEAR FROM saledate) = 2020
+GROUP BY store_name
 ORDER BY rank;
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
